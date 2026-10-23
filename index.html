@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyFlow — Student Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">✦</span><span>StudyFlow</span></div>
+      <p class="side-label">WORKSPACE</p>
+      <button class="nav-item active" data-view="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav-item" data-view="tasks">☑ <span>My tasks</span></button>
+      <button class="nav-item" data-view="focus">◷ <span>Focus timer</span></button>
+      <div class="sidebar-note">
+        <div class="note-icon">🌱</div>
+        <strong>Small steps add up.</strong>
+        <p>Make today count, one task at a time.</p>
+      </div>
+      <div class="sidebar-bottom">MADE FOR YOUR NEXT BIG THING ✨</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><span class="eyebrow">YOUR PERSONAL STUDY SPACE</span><h1 id="page-title">Good things start today.</h1></div>
+        <div class="date-pill" id="today-date"></div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="hero-tag">✦ YOUR DAY, YOUR PACE</span>
+          <h2>Make room for<br><em>your best work.</em></h2>
+          <p>Plan your priorities, track your progress, and give your goals a little attention every day.</p>
+          <button class="primary-btn" id="hero-add">＋ Add a task</button>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="art-card card-a">✎<small>Plan it</small></div>
+          <div class="art-card card-b">✓<small>Do it</small></div>
+          <div class="art-card card-c">✦<small>Grow</small></div>
+          <div class="plant">〰</div>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card lilac"><div class="stat-icon">☑</div><span>Tasks completed</span><strong id="completed-count">0</strong><small>Keep your momentum going</small></article>
+        <article class="stat-card peach"><div class="stat-icon">◎</div><span>Tasks remaining</span><strong id="remaining-count">0</strong><small>One thing at a time</small></article>
+        <article class="stat-card mint"><div class="stat-icon">◷</div><span>Focus sessions</span><strong id="session-count">0</strong><small>Every minute matters</small></article>
+      </section>
+
+      <section class="content-grid" id="dashboard-view">
+        <article class="panel task-panel">
+          <div class="panel-heading"><div><span class="eyebrow">STAY ON TRACK</span><h3>Today's priorities</h3></div><button class="text-btn" id="view-all">View all →</button></div>
+          <div class="progress-wrap"><div class="progress-track"><div id="progress-fill"></div></div><span id="progress-label">0% complete</span></div>
+          <div id="task-list" class="task-list"></div>
+          <div class="add-row"><input id="quick-task" type="text" placeholder="Add a quick task…" maxlength="90"><button id="quick-add" aria-label="Add task">＋</button></div>
+        </article>
+        <article class="panel side-panel">
+          <div class="panel-heading"><div><span class="eyebrow">TAKE A BREATHER</span><h3>Focus corner</h3></div><span class="sparkle">✦</span></div>
+          <div class="focus-visual"><div class="focus-ring"><span>25:00</span><small>MINUTES</small></div></div>
+          <p class="focus-description">A little focus goes a long way. Try a 25-minute session, then take a short break.</p>
+          <button class="secondary-btn" id="start-focus">Start focus session ↗</button>
+          <div class="quote"><span>“</span><p>You don't have to do it all. Just begin.</p></div>
+        </article>
+      </section>
+
+      <section class="panel full-panel hidden" id="tasks-view">
+        <div class="panel-heading"><div><span class="eyebrow">YOUR CHECKLIST</span><h3>All tasks</h3></div><button class="primary-btn small" id="all-add">＋ Add a task</button></div>
+        <div class="task-search">
+          <span aria-hidden="true">⌕</span>
+          <input id="task-search" type="search" placeholder="Search tasks by name, category, or priority…" aria-label="Search tasks">
+          <button id="clear-search" type="button" aria-label="Clear search" title="Clear search">×</button>
+        </div>
+        <div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="active">To do</button><button class="filter" data-filter="done">Completed</button></div>
+        <div id="all-task-list" class="task-list"></div>
+      </section>
+
+      <section class="panel full-panel hidden" id="focus-view">
+        <div class="focus-page">
+          <span class="eyebrow">POMODORO-STYLE TIMER</span><h3>Give one thing your attention.</h3>
+          <p>Choose a mode, start the timer, and focus on one task at a time.</p>
+          <div class="timer-modes"><button class="mode active" data-minutes="25">Focus · 25 min</button><button class="mode" data-minutes="5">Short break · 5 min</button><button class="mode" data-minutes="15">Long break · 15 min</button></div>
+          <div class="big-timer" id="big-timer">25:00</div>
+          <div class="timer-actions"><button class="primary-btn" id="timer-toggle">Start timer</button><button class="secondary-btn" id="timer-reset">Reset</button></div>
+          <p class="timer-hint" id="timer-hint">Your next step is enough.</p>
+        </div>
+      </section>
+      <footer>STUDYFLOW <span>•</span> ORGANIZE YOUR DAY, YOUR WAY</footer>
+    </main>
+  </div>
+
+  <dialog id="task-dialog">
+    <form method="dialog" id="task-form">
+      <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+      <span class="eyebrow">MAKE IT HAPPEN</span><h3>Add a task</h3>
+      <label for="task-title">What do you want to do?</label><input id="task-title" required maxlength="90" placeholder="e.g. Revise data structures">
+      <label for="task-category">Category</label>
+      <select id="task-category"><option>Study</option><option>Project</option><option>Personal</option><option>Deadline</option></select>
+      <label for="task-priority">Priority</label>
+      <select id="task-priority"><option>Medium</option><option>High</option><option>Low</option></select>
+      <div class="dialog-actions"><button class="secondary-btn" value="cancel">Cancel</button><button class="primary-btn" id="save-task" value="default">Add task</button></div>
+    </form>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
